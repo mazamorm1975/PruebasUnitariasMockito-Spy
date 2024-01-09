@@ -11,19 +11,20 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class TestDoubleSpy {
 
     @Test
-    public void DemoSpyWithoutMockito() {
-        BookRepositorySpy bookRepository = new BookRepositorySpy();
-        BookService bookService = new BookService(bookRepository);
+    public void demoMockSpy(){
+        BookRepositorySpy bookRepositorySpy = new BookRepositorySpy();
+        BookService bookService = new BookService(bookRepositorySpy);
 
-        Book book1 = new Book("1", "Mockito in Three minutes", LocalDate.now(), 1500);
-        Book book2 = new Book("2", "Maven for dummies", LocalDate.now(), 8500);
+        Book book1 = new Book("1","Mockito in three minutes", LocalDate.now(), 1500);
+        Book book2 = new Book("2","Maven for dummies", LocalDate.now(), 1900);
 
         bookService.addBook(book1);
         bookService.addBook(book2);
 
-        assertEquals(2, bookRepository.timesCalledSaveMethod());
-        assertTrue(bookRepository.calledWith(book2));
+        assertEquals(1, bookRepositorySpy.timesCalledSaveMethod());
+        assertTrue(bookRepositorySpy.isTheLatestBookAdded(book2));
 
     }
+
 
 }
